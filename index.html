@@ -1,26 +1,193 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-<title>Renato Bisquera Portfolio</title>
+
+<title>Renato Bisquera | Portfolio</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 
 <style>
-body {
-    margin: 0;
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
 }
 
-img {
-    width: 100%;
-    display: block;
+
+body {
+
+    margin: 0;
+    padding: 0;
+
+    background: #111111;
+
+    overflow-x: hidden;
+
 }
+
+
+/* Image sections */
+
+.section {
+
+    width: 100%;
+    max-width: 1920px;
+
+    margin: auto;
+
+    display: block;
+
+
+    opacity: 0;
+
+    transform:
+    translateY(80px)
+    scale(0.97);
+
+
+    transition:
+    opacity 1.2s ease,
+    transform 1.2s ease;
+
+}
+
+
+/* Reveal animation */
+
+.section.show {
+
+    opacity: 1;
+
+    transform:
+    translateY(0)
+    scale(1);
+
+}
+
+
+/* First page intro */
+
+.section:first-child {
+
+    animation:
+    heroIntro 1.5s ease forwards;
+
+}
+
+
+@keyframes heroIntro {
+
+
+from {
+
+opacity: 0;
+
+transform:
+translateY(50px)
+scale(.96);
+
+}
+
+
+to {
+
+opacity: 1;
+
+transform:
+translateY(0)
+scale(1);
+
+}
+
+
+}
+
+
+
+/* smoother image rendering */
+
+img {
+
+    image-rendering: auto;
+
+}
+
+
+
 </style>
+
 
 </head>
 
+
+
 <body>
 
-<img src="portfolio1.png">
+
+
+<img class="section" src="png1.png">
+
+<img class="section" src="png2.png">
+
+<img class="section" src="png3.png">
+
+<img class="section" src="png4.png">
+
+<img class="section" src="png5.png">
+
+
+
+<script>
+
+
+const sections = document.querySelectorAll(".section");
+
+
+const observer = new IntersectionObserver((entries)=>{
+
+
+entries.forEach(entry=>{
+
+
+if(entry.isIntersecting){
+
+
+entry.target.classList.add("show");
+
+
+}
+
+
+});
+
+
+}, {
+
+
+threshold: 0.15
+
+
+});
+
+
+
+sections.forEach(section=>{
+
+
+observer.observe(section);
+
+
+});
+
+
+
+</script>
+
+
 
 </body>
+
 
 </html>
