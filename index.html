@@ -7,11 +7,13 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
 <style>
 
 * {
     box-sizing: border-box;
 }
+
 
 html {
     scroll-behavior: smooth;
@@ -20,26 +22,31 @@ html {
 
 
 body {
+
     margin: 0;
+    padding: 0;
+
     background: #111;
+
     overflow-x: hidden;
+
 }
 
 
-/* slide */
+/* each page */
 
 .slide {
 
     height: 100vh;
     width: 100%;
 
-    position: relative;
-
     display: flex;
     justify-content: center;
     align-items: center;
 
     scroll-snap-align: start;
+
+    overflow: hidden;
 
 }
 
@@ -51,90 +58,78 @@ body {
 
     object-fit: cover;
 
-}
+    opacity: 0;
 
+    transform:
+    scale(.92)
+    translateY(60px);
 
-/* invisible buttons */
+    transition:
 
-.hotspot {
-
-    position: absolute;
-
-    cursor: pointer;
-
-    z-index: 10;
+    opacity 1.3s ease,
+    transform 1.3s ease;
 
 }
 
 
-/* EMAIL AREA */
+/* show animation */
 
-.email {
+.slide.show img {
 
-    left: 14%;
-    top: 60%;
+    opacity: 1;
 
-    width: 250px;
-    height: 40px;
-
-}
-
-
-/* PHONE AREA */
-
-.phone {
-
-    left: 14%;
-    top: 66%;
-
-    width: 200px;
-    height: 40px;
+    transform:
+    scale(1)
+    translateY(0);
 
 }
 
 
-/* hover effect */
+/* first loading animation */
 
-.hotspot:hover {
+.slide:first-child img {
 
-    border: 1px solid rgba(255,255,255,.4);
-    border-radius: 10px;
+animation:
+intro 1.5s ease forwards;
+
+}
+
+
+@keyframes intro {
+
+
+from {
+
+opacity:0;
+transform:scale(.9);
+
+}
+
+
+to {
+
+opacity:1;
+transform:scale(1);
+
+}
 
 }
 
 
 </style>
 
+
 </head>
+
 
 
 <body>
 
 
-<!-- PAGE 1 -->
 
 <div class="slide">
-
 <img src="png1.png">
-
-
-<a 
-class="hotspot email"
-href="mailto:bisquerajann@gmail.com">
-</a>
-
-
-<a
-class="hotspot phone"
-href="tel:+639952025463">
-</a>
-
-
 </div>
-
-
-
-<!-- OTHER PAGES -->
 
 
 <div class="slide">
@@ -158,6 +153,48 @@ href="tel:+639952025463">
 
 
 
+
+
+<script>
+
+
+const slides = document.querySelectorAll(".slide");
+
+
+const observer = new IntersectionObserver(entries => {
+
+
+entries.forEach(entry => {
+
+
+if(entry.isIntersecting){
+
+entry.target.classList.add("show");
+
+}
+
+
+});
+
+
+}, {
+
+threshold: .5
+
+});
+
+
+slides.forEach(slide => {
+
+observer.observe(slide);
+
+});
+
+
+</script>
+
+
 </body>
+
 
 </html>
