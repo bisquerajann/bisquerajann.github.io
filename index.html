@@ -10,9 +10,14 @@
 
 <style>
 
-/* Smooth scrolling */
+* {
+    box-sizing: border-box;
+}
+
+
 html {
     scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
 }
 
 
@@ -21,99 +26,94 @@ body {
     margin: 0;
     padding: 0;
 
-    background: #111111;
+    background: #111;
 
     overflow-x: hidden;
 
 }
 
 
-/* Image sections */
+/* each page */
 
-.section {
+.slide {
+
+    height: 100vh;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    scroll-snap-align: start;
+
+    overflow: hidden;
+
+}
+
+
+.slide img {
 
     width: 100%;
-    max-width: 1920px;
+    height: 100%;
 
-    margin: auto;
-
-    display: block;
-
+    object-fit: cover;
 
     opacity: 0;
 
     transform:
-    translateY(80px)
-    scale(0.97);
-
+    scale(.92)
+    translateY(60px);
 
     transition:
-    opacity 1.2s ease,
-    transform 1.2s ease;
+
+    opacity 1.3s ease,
+    transform 1.3s ease;
 
 }
 
 
-/* Reveal animation */
+/* show animation */
 
-.section.show {
+.slide.show img {
 
     opacity: 1;
 
     transform:
-    translateY(0)
-    scale(1);
+    scale(1)
+    translateY(0);
 
 }
 
 
-/* First page intro */
+/* first loading animation */
 
-.section:first-child {
+.slide:first-child img {
 
-    animation:
-    heroIntro 1.5s ease forwards;
+animation:
+intro 1.5s ease forwards;
 
 }
 
 
-@keyframes heroIntro {
+@keyframes intro {
 
 
 from {
 
-opacity: 0;
-
-transform:
-translateY(50px)
-scale(.96);
+opacity:0;
+transform:scale(.9);
 
 }
 
 
 to {
 
-opacity: 1;
-
-transform:
-translateY(0)
-scale(1);
+opacity:1;
+transform:scale(1);
 
 }
 
-
 }
-
-
-
-/* smoother image rendering */
-
-img {
-
-    image-rendering: auto;
-
-}
-
 
 
 </style>
@@ -127,35 +127,49 @@ img {
 
 
 
-<img class="section" src="png1.png">
+<div class="slide">
+<img src="png1.png">
+</div>
 
-<img class="section" src="png2.png">
 
-<img class="section" src="png3.png">
+<div class="slide">
+<img src="png2.png">
+</div>
 
-<img class="section" src="png4.png">
 
-<img class="section" src="png5.png">
+<div class="slide">
+<img src="png3.png">
+</div>
+
+
+<div class="slide">
+<img src="png4.png">
+</div>
+
+
+<div class="slide">
+<img src="png5.png">
+</div>
+
+
 
 
 
 <script>
 
 
-const sections = document.querySelectorAll(".section");
+const slides = document.querySelectorAll(".slide");
 
 
-const observer = new IntersectionObserver((entries)=>{
+const observer = new IntersectionObserver(entries => {
 
 
-entries.forEach(entry=>{
+entries.forEach(entry => {
 
 
 if(entry.isIntersecting){
 
-
 entry.target.classList.add("show");
-
 
 }
 
@@ -165,26 +179,19 @@ entry.target.classList.add("show");
 
 }, {
 
-
-threshold: 0.15
-
+threshold: .5
 
 });
 
 
+slides.forEach(slide => {
 
-sections.forEach(section=>{
-
-
-observer.observe(section);
-
+observer.observe(slide);
 
 });
-
 
 
 </script>
-
 
 
 </body>
